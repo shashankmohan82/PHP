@@ -1,4 +1,4 @@
-package haptik.producthunt.task.producthuntplus.searchlist;
+package haptik.producthunt.task.producthuntplus.postlist;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.app.DatePickerDialog;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -32,12 +31,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import io.realm.Realm;
 import io.realm.RealmList;
-
 import static android.content.Context.CONNECTIVITY_SERVICE;
 
 public class PostListFragment extends BaseFragment{
 
     private FrameLayout recyclerViewParent;
+    private ItemTouchListener itemTouchListener;
     private RecyclerView recyclerView;
     private PostRecyclerAdapter recyclerViewAdapter;
     private ProgressBar progressBar;
@@ -46,6 +45,7 @@ public class PostListFragment extends BaseFragment{
     private AppCompatImageButton dateButton;
     private Calendar mCalendar;
     ProductHuntAPI api = new ProductHuntAPI();
+    private static final String POSTS_PRIMARY_KEY= "date";
     private DatePickerDialog date;
     private Posts realmPosts;
     public static BaseFragment newInstance() {
@@ -83,7 +83,7 @@ public class PostListFragment extends BaseFragment{
                     if(progressBar != null )
                         progressBar.setVisibility(View.INVISIBLE);
                     throwable.printStackTrace();
-                    Toast.makeText(getActivity(),"Network needed for loading data for the day",
+                    Toast.makeText(getActivity(), R.string.network_error,
                             Toast.LENGTH_SHORT).show();
                 });
     }
@@ -93,23 +93,11 @@ public class PostListFragment extends BaseFragment{
 
     private void addPostsToRealm(Posts posts) {
         realm.executeTransaction(realm1 -> realm1.copyToRealmOrUpdate(posts));
-        realmPosts = realm.where(Posts.class).equalTo("date",dateParam).findFirst();
+        realmPosts = realm.where(Posts.class).equalTo(POSTS_PRIMARY_KEY,dateParam).findFirst();
         RealmList <Post> results = realmPosts.getPosts();
 
-
-        ItemTouchListener itemTouchListener = new ItemTouchListener() {
-            @Override
-            public void onItemClick(View view, int position, Post item) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
-                intent.putExtra("id",item.getId());
-                startActivity(intent);
-            }
-            @Override
-            public boolean onItemLongClick(View view, int position, Post item) {
-                return true;
-            }
-        };
         progressBar.setVisibility(View.INVISIBLE);
+        initItemTouchListener();
         recyclerViewAdapter = new PostRecyclerAdapter(results,itemTouchListener,getActivity());
          setUpDataFromNetwork();
     }
@@ -134,14 +122,28 @@ public class PostListFragment extends BaseFragment{
         super.onActivityCreated(savedInstanceState);
     }
 
+    private void initItemTouchListener(){
+        itemTouchListener = new ItemTouchListener() {
+            @Override
+            public void onItemClick(View view, int position, Post item) {
+                Intent intent = new Intent(getActivity(), CommentActivity.class);
+                intent.putExtra("id",item.getId());
+                intent.putExtra("postName",item.getName());
+                startActivity(intent);
+            }
+            @Override
+            public boolean onItemLongClick(View view, int position, Post item) {
+                return true;
+            }
+        };
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_searchlist, container, false);
         progressBar = (ProgressBar)rootView.findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
-        showDialog();
-        dateButton = (AppCompatImageButton)rootView.findViewById(R.id.calendar);
         recyclerViewParent = (FrameLayout) rootView.findViewById(R.id.recView_parent);
         recyclerView = (RecyclerView) recyclerViewParent.findViewById(R.id.recView);
 
@@ -151,6 +153,7 @@ public class PostListFragment extends BaseFragment{
         }
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.calendar_fab);
         fab.setOnClickListener(view -> date.show());
+        initDialog();
         return rootView;
     }
 
@@ -160,36 +163,24 @@ public class PostListFragment extends BaseFragment{
         progressBar.setVisibility(View.INVISIBLE);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setVisibility(View.VISIBLE);
-        showDialog();
+        initDialog();
     }
 
     private void setUpDataFromCache() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        realmPosts = realm.where(Posts.class).equalTo("date",dateParam).findFirst();
+        realmPosts = realm.where(Posts.class).equalTo(POSTS_PRIMARY_KEY,dateParam).findFirst();
         RealmList <Post> results = realmPosts.getPosts();
-
-        ItemTouchListener itemTouchListener = new ItemTouchListener() {
-            @Override
-            public void onItemClick(View view, int position, Post item) {
-                Intent intent = new Intent(getActivity(), CommentActivity.class);
-                intent.putExtra("id",item.getId());
-                startActivity(intent);
-            }
-            @Override
-            public boolean onItemLongClick(View view, int position, Post item) {
-                return true;
-            }
-        };
+        initItemTouchListener();
         recyclerViewAdapter = new PostRecyclerAdapter(results,itemTouchListener,getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-        showDialog();
+        initDialog();
     }
 
 
-    public void showDialog(){
+    public void initDialog(){
          mCalendar = Calendar.getInstance();
             date = new DatePickerDialog(getActivity(), (view, year, monthOfYear, dayOfMonth) -> {
                 Calendar newDate = Calendar.getInstance();

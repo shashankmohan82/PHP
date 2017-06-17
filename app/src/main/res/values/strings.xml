@@ -2,4 +2,5 @@
     <string name="app_name">ProductHunt Plus</string>
     <string name="comments">Post Comments</string>
     <string name="posts">Posts</string>
+    <string name="network_error">Network needed for loading data for the day</string>
 </resources>

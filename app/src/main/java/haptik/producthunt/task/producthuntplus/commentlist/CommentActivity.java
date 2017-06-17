@@ -22,7 +22,9 @@ public class CommentActivity extends BaseActivity {
         setContentView(layoutView);
         showThisFragment(CommentFragment.newInstance());
         title = (AppCompatTextView)findViewById(R.id.post_title);
-        title.setText("Comments");
+        String postName = getIntent().getStringExtra("postName");
+        if(postName!=null)
+        title.setText(new StringBuilder().append("Comments - ").append(postName).toString());
     }
 
     @Override

@@ -1,4 +1,4 @@
-package haptik.producthunt.task.producthuntplus.searchlist;
+package haptik.producthunt.task.producthuntplus.postlist;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,9 +24,8 @@ public class PostListActivity extends BaseActivity {
         View layoutView = getLayoutInflater().inflate(R.layout.activity_search_list, null, false);
         setContentView(layoutView);
         showThisFragment(PostListFragment.newInstance());
-        Log.d("hi","onCreteActi");
         title = (AppCompatTextView)findViewById(R.id.post_title);
-        title.setText("Posts");
+
     }
 
     @Override

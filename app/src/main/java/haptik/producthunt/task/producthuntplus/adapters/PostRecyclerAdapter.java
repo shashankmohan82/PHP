@@ -51,21 +51,21 @@ public class PostRecyclerAdapter extends RealmRecyclerAdapter<Post, PostRecycler
                     .load(data.get(position).getThumbnail().getImageUrl())
                     .into(holder.backdrop);
             holder.tagText.setText(getData().get(position).getTagline());
+            holder.voteTitle.setText(new StringBuilder().append(getData().get(position).getVotesCount()).append("").toString());
 
         }
         public class ViewHolder extends RecyclerView.ViewHolder {
-            private TextView commentText;
             private TextView postTitle;
             private ImageView backdrop;
             private TextView tagText;
+            private TextView voteTitle;
 
             public ViewHolder(View itemView) {
                 super(itemView);
-
-//                    commentText= (TextView) itemView.findViewById(R.id.comment_title);
                     postTitle = (TextView) itemView.findViewById(R.id.post_title);
                     backdrop = (ImageView) itemView.findViewById(R.id.backdrop);
                     tagText = (TextView)itemView.findViewById(R.id.tag_line);
+                    voteTitle = (TextView)itemView.findViewById(R.id.vote_title);
                     CardView cardView = (CardView) ((RelativeLayout) itemView).findViewById(R.id.card_view_recycler);
                     cardView.setOnClickListener(view ->
                             listener.onItemClick(view, getAdapterPosition(), getItem(getAdapterPosition())));

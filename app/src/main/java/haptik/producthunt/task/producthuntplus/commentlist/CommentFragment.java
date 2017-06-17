@@ -35,14 +35,15 @@ public class CommentFragment extends BaseFragment {
     private FrameLayout recyclerViewParent;
     private RecyclerView recyclerView;
     private CommentRecyclerAdapter recyclerViewAdapter;
-    private NewtonCradleLoading progressView;
+    private ItemTouchListener itemTouchListener;
     private Realm realm;
     private int postId;
     private Comments realmComments;
+    private static final String EXTRA_POST_ID_VAL = "id";
+    private static final String COMMMENTS_PRINARY_KEY = "postID";
     ProductHuntAPI api = new ProductHuntAPI();
 
     public static BaseFragment newInstance() {
-        Log.d("hi","onInstance");
         return new CommentFragment();
     }
 
@@ -62,8 +63,7 @@ public class CommentFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         realm = Realm.getDefaultInstance();
-        postId = getActivity().getIntent().getIntExtra("id",0);
-        Log.d("hi",postId+"");
+        postId = getActivity().getIntent().getIntExtra(EXTRA_POST_ID_VAL,0);
         if(!checkRealmCache()) {
             startAPI();
         }
@@ -76,16 +76,14 @@ public class CommentFragment extends BaseFragment {
         networkInteractor.hasInternetConnection()
                 .subscribe(this::getComments, throwable -> {
                     if(progressBar!= null){
-                        Log.d("hi","1");
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
 
     private boolean checkRealmCache(){
-        realmComments = realm.where(Comments.class).equalTo("postID",postId).findFirst();
+        realmComments = realm.where(Comments.class).equalTo(COMMMENTS_PRINARY_KEY,postId).findFirst();
         if(realmComments!= null && realmComments.getComments().size() > 0){
-            Log.d("hi","3");
             return true;
 
         }
@@ -97,7 +95,6 @@ public class CommentFragment extends BaseFragment {
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(comments -> {
-                    Log.d("hi","2");
                     comments.setPostID(postId);
                     addCommentsToRealm(comments);
                 });
@@ -107,32 +104,11 @@ public class CommentFragment extends BaseFragment {
         realm.executeTransaction(realm1 -> {
             realm1.copyToRealmOrUpdate(comments);
         });
-        Comments commentResult = realm.where(Comments.class).equalTo("postID",postId).findFirst();
+        Comments commentResult = realm.where(Comments.class).equalTo(COMMMENTS_PRINARY_KEY,postId).findFirst();
         RealmList<Comment> commentList = commentResult.getComments();
-
-        ItemTouchListener itemTouchListener = new ItemTouchListener() {
-            @Override
-            public void onItemClick(View view, int position, Comment item,int type) {
-                Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
-                whatsappIntent.setType("text/plain");
-                whatsappIntent.setPackage("com.whatsapp");
-                whatsappIntent.putExtra(Intent.EXTRA_TEXT, item.getUser().getName()
-                        +"'s comments :'"+item.getBody()+"'");
-                try {
-                    activity.startActivity(whatsappIntent);
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getContext(),"Whatsapp has not been installed",Toast.LENGTH_SHORT).show();
-                }
-            }
-            @Override
-            public boolean onItemLongClick(View view, int position, Comment item) {
-                return true;
-            }
-        };
+        initItemTouchListener();
         progressBar.setVisibility(View.INVISIBLE);
-        Log.d("hi","4");
         recyclerViewAdapter = new CommentRecyclerAdapter(commentList,itemTouchListener,getActivity());
-        Log.d("hi","5"+commentList.size());
         setUpDataFromNetwork();
     }
 
@@ -156,7 +132,6 @@ public class CommentFragment extends BaseFragment {
         recyclerViewParent = (FrameLayout) rootView.findViewById(R.id.recView_parent_comment);
         recyclerView = (RecyclerView) recyclerViewParent.findViewById(R.id.recView_comment);
         if(checkRealmCache()){
-            Log.d("hi","6");
             setUpDataFromCache();
         }
         return rootView;
@@ -167,17 +142,23 @@ public class CommentFragment extends BaseFragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setVisibility(View.VISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-        Log.d("hi","7");
         recyclerView.setAdapter(recyclerViewAdapter);
-
     }
 
     private void setUpDataFromCache() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        realmComments = realm.where(Comments.class).equalTo("postID",postId).findFirst();
+        realmComments = realm.where(Comments.class).equalTo(COMMMENTS_PRINARY_KEY,postId).findFirst();
         RealmList <Comment> results = realmComments.getComments();
+        initItemTouchListener();
+        recyclerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+        recyclerViewAdapter = new CommentRecyclerAdapter(results,itemTouchListener,getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(recyclerViewAdapter);
+    }
 
-        ItemTouchListener itemTouchListener = new ItemTouchListener() {
+    private void initItemTouchListener(){
+        itemTouchListener = new ItemTouchListener() {
             @Override
             public void onItemClick(View view, int position, Comment item,int type) {
                 Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
@@ -195,13 +176,6 @@ public class CommentFragment extends BaseFragment {
                 return true;
             }
         };
-        recyclerView.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
-        Log.d("hi","8");
-        recyclerViewAdapter = new CommentRecyclerAdapter(results,itemTouchListener,getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(recyclerViewAdapter);
-
     }
 
     @Override
