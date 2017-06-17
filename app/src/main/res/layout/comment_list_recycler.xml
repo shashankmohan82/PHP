@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <FrameLayout
+        android:id="@+id/frame_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp">
+
+            <RelativeLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/post_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="15dp"
+                android:scaleType="centerCrop"
+                android:src="@android:color/holo_red_dark"
+                app:civ_border_color="@android:color/darker_gray"
+                app:civ_border_width="0.25dp" />
+
+                <TextView
+                    android:id="@+id/comment_text"
+                    android:layout_below="@+id/username_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_marginBottom="15dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/body_text_2"
+                    style="@style/TextHeader"
+                    android:typeface="normal" />
+
+
+                <TextView
+                    android:id="@+id/username_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="85dp"
+                    android:layout_marginTop="25dp"
+                    android:textSize="14sp"
+                    android:layout_marginBottom="4dp"
+                    android:text="345"
+                    android:textColor="@color/body_text_1"
+                    style="@style/TextBody"
+                    android:typeface="normal" />
+
+                <ImageView
+                    android:id="@+id/shareView"
+                    android:layout_width="40dp"
+                    android:padding="10dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/details"
+                    android:layout_height="40dp"
+                    android:layout_marginRight="24dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="14dp"
+                    android:src="@drawable/whatsapp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    />
+
+
+                <View
+                    android:id="@+id/endbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/textColor" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</RelativeLayout>

@@ -22,7 +22,6 @@ public class Thumbnail extends RealmObject implements Parcelable {
 
     public Thumbnail() {
     }
-
     protected Thumbnail(Parcel in) {
         id = in.readInt();
         mediaType = in.readString();

@@ -5,13 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-
-
-        <include layout="@layout/post_search_action_bar" />
-    <!--</android.support.design.widget.AppBarLayout>-->
+   <include layout="@layout/comment_search_action_bar" />
 
     <FrameLayout
-        android:id="@+id/frame_search_list"
+        android:id="@+id/frame_comment_list"
         android:layout_width="match_parent"
         android:layout_marginTop="105dp"
         android:layout_height="match_parent"

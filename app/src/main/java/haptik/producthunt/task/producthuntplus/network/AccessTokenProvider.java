@@ -1,19 +1,14 @@
 package haptik.producthunt.task.producthuntplus.network;
 
 import android.util.Log;
-
-
 import java.io.IOException;
-
 import haptik.producthunt.task.producthuntplus.api.APIConfig;
 import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by sHIVAM on 6/14/2017.
- */
+
 public class AccessTokenProvider implements Interceptor {
 
     private boolean isNetworkActive;
@@ -42,7 +37,7 @@ public class AccessTokenProvider implements Interceptor {
 
 }
 
-class NoConnectivityException extends IOException {
+    class NoConnectivityException extends IOException {
 
     @Override
     public String getMessage() {

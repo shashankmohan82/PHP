@@ -1,9 +1,5 @@
 package haptik.producthunt.task.producthuntplus.api.models;
 
-/**
- * Created by sHIVAM on 6/14/2017.
- */
-
 import android.os.Parcel;
 import android.os.Parcelable;
 

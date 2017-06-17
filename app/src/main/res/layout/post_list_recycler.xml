@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/frame_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_recycler"
+            android:layout_width="match_parent"
+            card_view:elevation="4dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="0dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/post_title"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/backdrop"
+                    android:textSize="17sp"
+                    android:textColor="@color/body_text_1"
+                    style="@style/TextHeader"
+                    android:typeface="normal" />
+
+                <ImageView
+                    android:id="@+id/backdrop"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_height="120dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    />
+
+                <ImageView
+                    android:id="@+id/voteView"
+                    android:layout_width="20dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/details"
+                    android:layout_height="20dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="11dp"
+                    android:src="@drawable/vote_image"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside"
+                    />
+
+               <TextView
+                   android:layout_width="15dp"
+                   android:layout_height="15dp"
+                   android:layout_alignParentRight="true"
+                   android:layout_alignParentTop="true"
+                   android:layout_marginTop="15dp"
+                   android:layout_marginRight="15dp"
+                   android:id="@+id/comment_title"/>
+
+                <TextView
+                    android:id="@+id/tag_line"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/post_title"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_toRightOf="@+id/backdrop"
+                    android:layout_marginTop="4dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/body_text_2"
+                    android:textSize="13sp"
+                    android:typeface="normal" />
+
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tag_line"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_toRightOf="@+id/backdrop"
+                    android:text="Click to view comments"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="12sp"
+                    android:typeface="normal" />
+
+                <View
+                    android:id="@+id/endbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="3dp"
+                    android:background="@color/textColor" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+    </FrameLayout>
+</RelativeLayout>

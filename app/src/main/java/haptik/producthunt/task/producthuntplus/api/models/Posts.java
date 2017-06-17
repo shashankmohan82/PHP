@@ -8,11 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
-
-;
-
+import io.realm.annotations.PrimaryKey;
 
 public class Posts extends RealmObject implements Parcelable{
+
+    @PrimaryKey
+    private String date;
 
     @SerializedName("posts")
     @Expose
@@ -20,10 +21,20 @@ public class Posts extends RealmObject implements Parcelable{
 
     public Posts() {
     }
+    public int getCount() {
+        return posts.size();
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     protected Posts(Parcel in) {
     }
-
     @Override
     public void writeToParcel(Parcel dest, int flags) {
     }

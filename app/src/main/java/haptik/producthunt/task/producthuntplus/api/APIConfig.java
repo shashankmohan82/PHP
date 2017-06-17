@@ -1,8 +1,5 @@
 package haptik.producthunt.task.producthuntplus.api;
 
-/**
- * Created by sHIVAM on 6/14/2017.
- */
 public final class APIConfig {
     public static final String API_BASE_URL = "api.producthunt.com";
     public static final String API_VERSION = "v1";

@@ -13,9 +13,6 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 
-/**
- * Created by sHIVAM on 6/14/2017.
- */
 public interface ProductHuntAPIService {
     @POST("oauth/token")
     Observable<AccessToken> getAccessToken(@Body ClientAuthentication auth);

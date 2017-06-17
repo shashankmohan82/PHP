@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/recView_parent">
+    android:id="@+id/recView_parent_comment">
+
     <ProgressBar
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
@@ -13,21 +14,10 @@
         android:layout_gravity="center"
         android:id="@+id/progressBar" />
 
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recView"
+        android:id="@+id/recView_comment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/calendar_fab"
-        android:layout_gravity="bottom|right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:background="?attr/selectableItemBackground"
-        android:src="@drawable/calendar"
-        />
 
 </FrameLayout>

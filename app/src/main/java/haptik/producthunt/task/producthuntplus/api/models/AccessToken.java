@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
 
-;
 
 public class AccessToken extends RealmObject implements Parcelable {
 

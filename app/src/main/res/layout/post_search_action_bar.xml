@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        app:cardCornerRadius="0dp"
+        android:backgroundTint="#007D8C"
+        card_view:cardBackgroundColor="@color/colorPrimaryDark"
+        app:contentPaddingBottom="8dp"
+        app:contentPaddingTop="8dp">
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:layout_marginLeft="22dp"
+            android:gravity="top|left"
+            android:id="@+id/title_textView"
+            android:text="ProductHunt Plus"
+            style="@style/TextBody"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="19sp" />
+
+        <android.support.v7.widget.AppCompatImageButton
+            android:id="@+id/calendar"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:padding="4dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="top|right"
+            android:background="@android:color/transparent"
+            android:src="@drawable/magnify"
+            android:scaleType="centerCrop"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="8dp">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_marginLeft="22dp"
+                android:gravity="top|left"
+                android:id="@+id/post_title"
+                android:text="@string/posts"
+                style="@style/TextBody"
+                android:textColor="@color/white"
+                android:textStyle="normal"
+                android:textSize="17sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</merge>
+

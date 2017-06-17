@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import haptik.producthunt.task.producthuntplus.api.models.Comment;
+import haptik.producthunt.task.producthuntplus.api.models.Post;
 import io.realm.OrderedCollectionChangeSet;
 import io.realm.OrderedRealmCollection;
 import io.realm.OrderedRealmCollectionChangeListener;
@@ -13,8 +13,7 @@ import io.realm.RealmList;
 import io.realm.RealmModel;
 import io.realm.RealmResults;
 
-
-public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
+public abstract class RealmRecyclerAdapter<T extends RealmModel, VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
 
     @Nullable
     private RealmList<T> data;
@@ -47,13 +46,12 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
     }
 
 
-    public RealmRecViewAdapter(@Nullable RealmList<T> data, boolean autoUpdate) {
+    public RealmRecyclerAdapter(@Nullable RealmList<T> data, boolean autoUpdate) {
         this(data, autoUpdate, true);
     }
 
-    public RealmRecViewAdapter(@Nullable RealmList<T> data, boolean autoUpdate, boolean isUpdateRequired) {
-        if (data != null && !data.isManaged())
-            throw new IllegalStateException("Data supplied is not managed by Realm");
+    public RealmRecyclerAdapter(@Nullable RealmList<T> data, boolean autoUpdate, boolean isUpdateRequired) {
+
         this.data = data;
         this.autoUpdate = autoUpdate;
         this.isUpdateRequired = isUpdateRequired;
@@ -63,15 +61,18 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-        if (autoUpdate && isDatasetValid())
-            addChangeListener(data);
+        if (autoUpdate && isDatasetValid()){
+        }
+            //addChangeListener(data);
     }
 
     @Override
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
         super.onDetachedFromRecyclerView(recyclerView);
-        if (autoUpdate && isDatasetValid())
-            removeChangeListener(data);
+        if (autoUpdate && isDatasetValid()){
+
+        }
+            //removeChangeListener(data);
     }
 
     public void updateData(@Nullable RealmList<T> data) {
@@ -128,13 +129,13 @@ public abstract class RealmRecViewAdapter<T extends RealmModel, VH extends Recyc
     }
 
     @Nullable
-    public Comment getItem(int position) {
+    public T getItem(int position) {
         Log.d("position",position+"");
-        return isDatasetValid() && position < data.size() ? (Comment) data.get(position) : null;
+        return isDatasetValid() && position < data.size() ? (T) data.get(position) : null;
     }
 
     @Nullable
-    public RealmList<Comment> getData() {
-        return (RealmList<Comment>) data;
+    public RealmList<T> getData() {
+        return (RealmList<T>) data;
     }
 }

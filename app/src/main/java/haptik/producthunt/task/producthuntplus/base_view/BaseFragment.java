@@ -24,5 +24,4 @@ public abstract class BaseFragment extends Fragment {
     public String getFragmentTag() {
         return "";
     }
-
 }
